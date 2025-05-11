@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu vida ALNST</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/estilo.css">
+    <!-- <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script> -->
+</head>
+
+<body>
+    <header class="text-center">
+        <img src="img/pagina/todosdeEspalda.webp" alt="personajes de alien stage de espalda y un cielo estrellado">
+    </header>
+    <main>
+        <div class="text-center p-2">
+            <h1>Tu vida de Alien Stage</h1>
+            <div class="text-center intro">
+                <h2>Sobre Alien stage...</h2>
+                <div>
+                    <p>Una serie web anima Creada por <strong>VIVINOS y QMENG</strong>, y producida por <strong>STUDIO LICO</strong>, donde los humanos
+                        son esclavizados, usados como mascotas por los extraterrestres para competir en shows de canto
+                        para su entretenimiento.</p>
+                    <p>Aquí puedes crear tu propio personaje en cualquiera de los mundos de la creadora. El original
+                        donde participas en tu propia competencia, el AU de actores donde todo esto es actuado o el AU
+                        escolar donde todos los personajes asisten a un mismo instituto y son compañeros.</p>
+
+                </div>
+                <p>Crea a tu propio personaje y tu historia en su mundo o cualquiera de sus AU</p>
+            </div>
+
+            <div id="app" v-cloak>
+
+                <!-- Primero componente con formulario 1 de datos generales -->
+                <div class="contenedor1" class="text-center">
+                    <comp-form1 @datospersonaje="conseguirpj">
+                    </comp-form1>
+
+                </div>
+
+                <!-- El segundo formulario va a existir depentiendo que contesto en el primero -->
+
+                <div class="text-center">
+
+
+                    <div v-if="datospjuss.mundo === 'original'">
+
+                        <div>
+                            <h2>Mundo Original</h2>
+                            <h3>historia de {{filtroMayus(datospjuss.nombrepj)}}</h3>
+                            <!-- <h3>Estadisticas(0-5) y contrincante</h3> -->
+                        </div>
+
+                        <form-aliens :personaje="personajes"> </form-aliens>
+
+
+                    </div>
+                    <div v-else-if="datospjuss.mundo === 'actores'">
+                        <h2>Mundo Actores</h2>
+                        <h3>historia de {{datospjuss.nombrepj}}</h3>
+                        <form-actores :personaje="personajes"></form-actores>
+
+
+                    </div>
+                    <div v-else-if="datospjuss.mundo === 'escuela'">
+                        <div>
+                            <h2>Mundo en la Escuela</h2>
+                            <h3>historia de {{datospjuss.nombrepj}}</h3>
+                        </div>
+                        <form-escuela :personaje="personajes"></form-escuela>
+                    </div>
+                    <div v-else>
+                        <p>Esperando el mundo...</p>
+                    </div>
+
+
+
+                </div>
+
+                <div class="text-center">
+                    <div v-if="datospjuss.largoP === 'largo'">
+                        <div v-for="x in ocussLargo">
+                            <img v-if="x.color === datospjuss.colorP" v-bind:src="x.img" :alt="x.alt"
+                                :class="datospjuss.mundo === 'original' ? 'pjalien' : 'pjMnormal'">
+                        </div>
+
+                    </div>
+                    <div v-else-if="datospjuss.largoP === 'corto'">
+                        <div v-for="x in ocussCorto">
+                            <img v-if="x.color === datospjuss.colorP" v-bind:src="x.img" :alt="x.alt"
+                                :class="datospjuss.mundo === 'original' ? 'pjalien' : 'pjMnormal'">
+                        </div>
+
+
+                    </div>
+                    <p v-else> Esperando personaje...</p>
+                </div>
+
+
+
+            </div>
+    </main>
+    <footer>
+        <div class="footer-datos d-flex justify-content-around">
+            <div>
+                <p>Puedes escuchar más de sus canciones en:</p>
+                <a href="http://www.youtube.com/@VIVINOS">Canal de youtube VIVINOS</a>
+            </div>
+            <div class="d-flex flex-column">
+                <p>¡Escucha a los cantantes que hacen las voces de los personajes!</p>
+                <a href="https://open.spotify.com/intl-es/artist/09lAeB3r5B5J5RyN68XiPt?si=nm9XdaGsT4mI9wQG99LCdw"> 6FU
+                    -- Hyuna</a>
+                <a href="https://open.spotify.com/intl-es/artist/0qs2PuNODoOAKG4rIv9fB2?si=XMrqNTs-TPurAHg5tp57tQ"> PARK
+                    BYEONG HOON -- Ivan</a>
+                <a href="https://open.spotify.com/intl-es/artist/3oOA09qR93zgp61ALkHIJJ?si=XCsKwfrsS5KB8reJu7mCfg">BL8M
+                    -- Luka</a>
+                <a href="https://open.spotify.com/intl-es/artist/5mFBPisqWsuM2DaNRRKMNo?si=T_r6QP-QS5OWmrSKdqVB4w">
+                    Rubyeye Mizi</a>
+                <a href="https://open.spotify.com/intl-es/artist/0vA45SriohIjcLXbwPhF2p?si=LeH8X0rcRxabwhIZWS2aHw">C!naH
+                    -- Sua</a>
+                <a href="https://open.spotify.com/intl-es/artist/5lMia1loNJEa8ofqQkKFAp?si=oKZCtbHVQ06B2jPRE3PVVg">AKUGETSU
+                    -- Till</a>
+            </div>
+            <div>
+                <p>Diseñadora y programadora:</p>
+                <p>Lara Florian</p>
+                <a href="https://www.instagram.com/lara_m_florian/">@Lara_Florian ig</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script/vue3.js"></script>
+    <script src="script/app.js"></script>
+</body>
+
+</html>
